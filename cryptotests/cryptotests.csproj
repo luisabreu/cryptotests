@@ -47,8 +47,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomNumbers\IRandomNumberGenerator.cs" />
-    <Compile Include="RandomNumbers\SimpleRandomGenerator.cs" />
+    <Compile Include="RandomNumbers\BetterRandomIntGenerator.cs" />
+    <Compile Include="RandomNumbers\IRandomIntGenerator.cs" />
+    <Compile Include="RandomNumbers\SimpleRandomIntGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

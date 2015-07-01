@@ -1,14 +1,14 @@
 ﻿using System;
 
 namespace cryptotests.RandomNumbers {
-    public class SimpleRandomGenerator : IRandomNumberGenerator {
+    public class SimpleRandomIntGenerator : IRandomIntGenerator {
         private readonly int _maxValue;
         private readonly int _minValue;
         private readonly Random _randomGenerator;
 
-        public SimpleRandomGenerator(int seed, int maxValue = 10, int minValue = 0) {
+        public SimpleRandomIntGenerator(int seed, int maxValue = 10, int minValue = 0) {
             if (seed <= 0) {
-                throw new ArgumentException("seed must be a positive number");
+                throw new ArgumentException($"{nameof(seed)} must be a positive number");
             }
             _maxValue = maxValue;
             _minValue = minValue;

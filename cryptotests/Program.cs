@@ -1,21 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using cryptotests.RandomNumbers;
 
-namespace cryptotests
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            GenerateRandomNumbersFromSimpleRandomGenerator();
+namespace cryptotests {
+    internal class Program {
+        private static void Main(string[] args) {
+            //GenerateRandomNumbersFromSimpleRandomGenerator();
+            GenerateRandomNumbersFromBetterRandomGenerator();
         }
 
-        static void GenerateRandomNumbersFromSimpleRandomGenerator() {
-            var generator = new SimpleRandomGenerator(250);
+        private static void GenerateRandomNumbersFromBetterRandomGenerator() {
+            //using 10, but asking for 20 in order to test buffer regeneration
+            var generator = new BetterRandomIntGenerator(10);
+            var pos = 0;
+            Enumerable.Range(0, 20)
+                .Select( i => generator.GetNextRandomNumber())
+                .ToList()
+                .ForEach(i => Console.WriteLine($"iteration {pos++}: {i} "));
+        }
+
+        private static void GenerateRandomNumbersFromSimpleRandomGenerator() {
+            var generator = new SimpleRandomIntGenerator(250);
             for (var i = 0; i < 10; i++) {
                 Console.WriteLine($"iteration {i}: {generator.GetNextRandomNumber()} ");
             }

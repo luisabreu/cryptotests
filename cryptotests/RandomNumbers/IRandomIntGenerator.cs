@@ -1,5 +1,5 @@
 ﻿namespace cryptotests.RandomNumbers {
-    public interface IRandomNumberGenerator {
+    public interface IRandomIntGenerator {
         int GetNextRandomNumber();
     }
 }
