@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 
 namespace cryptotests.RandomNumbers {
-    public class BetterRandomIntGenerator : IRandomIntGenerator {
+    public sealed class BetterRandomIntGenerator : IRandomIntGenerator, IDisposable {
         private readonly int _numberOfRandomIntsToGenerate;
         private readonly RNGCryptoServiceProvider _randomGenerator;
         private readonly byte[] _randomNumbers;
@@ -48,6 +48,17 @@ namespace cryptotests.RandomNumbers {
         private void ResetBuffer() {
             _numberOfGeneratedInts = 0;
             _randomGenerator.GetBytes(_randomNumbers);
+        }
+
+        public void Dispose() {
+           Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool isDisposing) {
+            if (isDisposing) {
+                ((IDisposable)_randomGenerator).Dispose();
+            }
         }
     }
 }

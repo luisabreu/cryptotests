@@ -49,6 +49,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomNumbers\BetterRandomIntGenerator.cs" />
     <Compile Include="RandomNumbers\IRandomIntGenerator.cs" />
+    <Compile Include="RandomNumbers\IRandomNumberGenerator.cs" />
+    <Compile Include="RandomNumbers\RandomNumberGenerator.cs" />
     <Compile Include="RandomNumbers\SimpleRandomIntGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
