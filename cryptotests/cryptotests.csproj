@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hashes\IHashGenerator.cs" />
+    <Compile Include="Hashes\Md5HashGenerator.cs" />
+    <Compile Include="Hashes\Sha1HashGenerator.cs" />
+    <Compile Include="Hashes\Sha256HashGenerator.cs" />
+    <Compile Include="Hashes\Sha512HashGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomNumbers\BetterRandomIntGenerator.cs" />
