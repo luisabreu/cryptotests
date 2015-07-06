@@ -45,7 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hashes\HmacGenerator.cs" />
     <Compile Include="Hashes\IHashGenerator.cs" />
+    <Compile Include="Hashes\IHmacGenerator.cs" />
     <Compile Include="Hashes\Md5HashGenerator.cs" />
     <Compile Include="Hashes\Sha1HashGenerator.cs" />
     <Compile Include="Hashes\Sha256HashGenerator.cs" />

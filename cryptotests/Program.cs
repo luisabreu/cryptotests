@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using cryptotests.Hashes;
 using cryptotests.RandomNumbers;
 using static System.Convert;
+using RandomNumberGenerator = cryptotests.RandomNumbers.RandomNumberGenerator;
 
 namespace cryptotests {
     internal class Program {
@@ -11,10 +13,46 @@ namespace cryptotests {
 //            GenerateRandomIntsFromSimpleRandomGenerator();
 //            GenerateRandomIntsFromBetterRandomGenerator();
           //  GenerateRandomNumbers();
-          GenerateHashMd5("Hi, there!!!");
-          GenerateHashSHA1("Hi, there!!!");
-          GenerateHashSHA256("Hi, there!!!");
-          GenerateHashSHA512("Hi, there!!!");
+//          GenerateHashMd5("Hi, there!!!");
+//          GenerateHashSHA1("Hi, there!!!");
+//          GenerateHashSHA256("Hi, there!!!");
+//          GenerateHashSHA512("Hi, there!!!");
+            byte[] key = new RandomNumberGenerator(256).GetNextRandomNumbers();
+            GenerateHmacMd5(key, "Hi there");
+            GenerateHmacSha1(key, "Hi there");
+            GenerateHmacSha256(key, "Hi there");
+            GenerateHmacSha512(key, "Hi there");
+        }
+
+        private static void GenerateHmacSha1(byte[] key, string msg) {
+            using (var hmacGenerator = new HmacGenerator(new HMACSHA1(key))) {
+                var hmac = hmacGenerator.ComputeHmac(Encoding.UTF8.GetBytes(msg));
+                Console.WriteLine(Convert.ToBase64String(hmac));
+            }
+            
+        }
+
+        private static void GenerateHmacSha256(byte[] key, string msg) {
+            using (var hmacGenerator = new HmacGenerator(new HMACSHA256(key))) {
+                var hmac = hmacGenerator.ComputeHmac(Encoding.UTF8.GetBytes(msg));
+                Console.WriteLine(Convert.ToBase64String(hmac));
+            }
+            
+        }
+
+        private static void GenerateHmacSha512(byte[] key, string msg) {
+            using (var hmacGenerator = new HmacGenerator(new HMACSHA512(key))) {
+                var hmac = hmacGenerator.ComputeHmac(Encoding.UTF8.GetBytes(msg));
+                Console.WriteLine(Convert.ToBase64String(hmac));
+            }
+            
+        }
+        private static void GenerateHmacMd5(byte[] key, string msg) {
+            using (var hmacGenerator = new HmacGenerator(new HMACMD5(key))) {
+                var hmac = hmacGenerator.ComputeHmac(Encoding.UTF8.GetBytes(msg));
+                Console.WriteLine(Convert.ToBase64String(hmac));
+            }
+            
         }
 
         private static void GenerateHashMd5(string msg) {
