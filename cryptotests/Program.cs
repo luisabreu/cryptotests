@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
+using cryptotests.Hashes;
 using cryptotests.RandomNumbers;
 using static System.Convert;
 
@@ -8,7 +10,33 @@ namespace cryptotests {
         private static void Main(string[] args) {
 //            GenerateRandomIntsFromSimpleRandomGenerator();
 //            GenerateRandomIntsFromBetterRandomGenerator();
-            GenerateRandomNumbers();
+          //  GenerateRandomNumbers();
+          GenerateHashMd5("Hi, there!!!");
+          GenerateHashSHA1("Hi, there!!!");
+          GenerateHashSHA256("Hi, there!!!");
+          GenerateHashSHA512("Hi, there!!!");
+        }
+
+        private static void GenerateHashMd5(string msg) {
+            HashMessage<Md5HashGenerator>(msg);
+        }
+
+        private static void GenerateHashSHA1(string msg) {
+            HashMessage<Sha1HashGenerator>(msg);
+        }
+
+        private static void GenerateHashSHA256(string msg) {
+            HashMessage<Sha256HashGenerator>(msg);
+        }
+
+        private static void GenerateHashSHA512(string msg) {
+            HashMessage<Sha512HashGenerator>(msg);
+        }
+
+        private static void HashMessage<T>(string msg) where T: IHashGenerator, new() {
+            var bytes = Encoding.UTF8.GetBytes(msg);
+            var hash = new T().ComputeHashForMessage(bytes);
+            Console.WriteLine(Convert.ToBase64String(hash));
         }
 
         private static void GenerateRandomNumbers() {
