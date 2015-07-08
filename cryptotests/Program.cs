@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using cryptotests.Hashes;
+using cryptotests.Passwords;
 using cryptotests.RandomNumbers;
 using static System.Convert;
 using RandomNumberGenerator = cryptotests.RandomNumbers.RandomNumberGenerator;
@@ -17,11 +18,23 @@ namespace cryptotests {
 //          GenerateHashSHA1("Hi, there!!!");
 //          GenerateHashSHA256("Hi, there!!!");
 //          GenerateHashSHA512("Hi, there!!!");
-            byte[] key = new RandomNumberGenerator(256).GetNextRandomNumbers();
-            GenerateHmacMd5(key, "Hi there");
-            GenerateHmacSha1(key, "Hi there");
-            GenerateHmacSha256(key, "Hi there");
-            GenerateHmacSha512(key, "Hi there");
+//            byte[] key = new RandomNumberGenerator(256).GetNextRandomNumbers();
+//            GenerateHmacMd5(key, "Hi there");
+//            GenerateHmacSha1(key, "Hi there");
+//            GenerateHmacSha256(key, "Hi there");
+//            GenerateHmacSha512(key, "Hi there");
+
+            GenerateHashForPass();
+        }
+
+        private static void GenerateHashForPass() {
+            var pass = "Howdy, there!!!";
+            var salt = new RandomNumberGenerator(32).GetNextRandomNumbers();
+            var passHasher = new PasswordHasher(new Sha512HashGenerator());
+
+            var passHashed = passHasher.HashPasswordWithSalt(Encoding.UTF8.GetBytes(pass), salt);
+
+            Console.WriteLine($"Pass hashed: {Convert.ToBase64String(passHashed)}");
         }
 
         private static void GenerateHmacSha1(byte[] key, string msg) {
