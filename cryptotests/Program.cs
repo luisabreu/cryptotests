@@ -24,7 +24,18 @@ namespace cryptotests {
 //            GenerateHmacSha256(key, "Hi there");
 //            GenerateHmacSha512(key, "Hi there");
 
-            GenerateHashForPass();
+//            GenerateHashForPass();
+            GeneratePassWithKeyDerivedFunction();
+        }
+
+        private static void GeneratePassWithKeyDerivedFunction() {
+            var pass = "Hello, world";
+            var salt = new RandomNumberGenerator(32).GetNextRandomNumbers();
+            var hasher = new PasswordWithKeyDerivationFunctionHasher();
+
+            var passHashed = hasher.HashPasswordWithSalt(Encoding.UTF8.GetBytes(pass), salt);
+
+            Console.WriteLine($"Pass hashed: {Convert.ToBase64String(passHashed)}");
         }
 
         private static void GenerateHashForPass() {

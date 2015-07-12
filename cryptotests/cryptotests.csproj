@@ -54,6 +54,7 @@
     <Compile Include="Hashes\Sha512HashGenerator.cs" />
     <Compile Include="Passwords\IPasswordHasher.cs" />
     <Compile Include="Passwords\PasswordHasher.cs" />
+    <Compile Include="Passwords\PasswordWithKeyDerivationFunctionHasher.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomNumbers\BetterRandomIntGenerator.cs" />
