@@ -1,14 +1,14 @@
-﻿using System;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 namespace cryptotests.RandomNumbers {
-    public class RandomNumberGenerator : IRandomNumberGenerator  {
+    public class RandomNumberGenerator : IRandomNumberGenerator {
         private readonly int _length;
 
         public RandomNumberGenerator(int length) {
-            if (length <= 0) {
-                throw new ArgumentException($"{nameof(length)} must be a positive number.");
-            }
+            Contract.Requires(length > 0);
+            Contract.Ensures(_length > 0);
             _length = length;
         }
 
@@ -18,6 +18,13 @@ namespace cryptotests.RandomNumbers {
                 generator.GetBytes(randomNumbers);
                 return randomNumbers;
             }
+        }
+
+        [ContractInvariantMethod]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic",
+            Justification = "Required for code contracts.")]
+        private void ObjectInvariant() {
+            Contract.Invariant(_length > 0);
         }
     }
 }

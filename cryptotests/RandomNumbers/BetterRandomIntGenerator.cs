@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 
 namespace cryptotests.RandomNumbers {
@@ -13,12 +14,14 @@ namespace cryptotests.RandomNumbers {
         public BetterRandomIntGenerator(int numberOfRandomIntsToGenerate = 10, 
             int maxValue = 10,
             int minValue = 0) {
-            if (numberOfRandomIntsToGenerate <= 0) {
-                throw new ArgumentException($"{nameof(numberOfRandomIntsToGenerate)} must be a positive number.");
-            }
-            if (minValue > maxValue) {
-                throw new ArgumentException($"{nameof(minValue)} must be smaller than {nameof(maxValue)}");
-            }
+            Contract.Requires(numberOfRandomIntsToGenerate > 0);
+            Contract.Requires(minValue >= 0);
+            Contract.Requires(maxValue >= 0);
+            Contract.Requires(minValue <= maxValue);
+            Contract.Ensures(_numberOfRandomIntsToGenerate <= 0);
+            Contract.Ensures(_minValue <= _maxValue);
+            Contract.Ensures(_minValue >= 0);
+            Contract.Ensures(_maxValue >= 0);
             _minValue = minValue;
             _maxValue = maxValue;
             _numberOfRandomIntsToGenerate = numberOfRandomIntsToGenerate;
@@ -60,5 +63,16 @@ namespace cryptotests.RandomNumbers {
                 ((IDisposable)_randomGenerator).Dispose();
             }
         }
+
+        [ContractInvariantMethod]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Required for code contracts.")]
+        private void ObjectInvariant()
+        {
+            Contract.Invariant(_numberOfRandomIntsToGenerate > 0);
+            Contract.Invariant(_minValue < _maxValue);
+            Contract.Invariant(_minValue >= 0);
+            Contract.Invariant(_maxValue > 0);
+        }
+
     }
 }

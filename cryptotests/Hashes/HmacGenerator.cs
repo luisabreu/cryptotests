@@ -1,24 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace cryptotests.Hashes
-{
-    public class HmacGenerator:IHmacGenerator, IDisposable  {
+namespace cryptotests.Hashes {
+    public class HmacGenerator : IHmacGenerator, IDisposable {
         private readonly HMAC _hmacGenerator;
 
         public HmacGenerator(HMAC hmacGenerator) {
-            if (hmacGenerator == null) {
-                throw new ArgumentNullException($"{nameof(hmacGenerator)} cannot be null.");
-            }
+            Contract.Requires(hmacGenerator != null);
+            Contract.Ensures(_hmacGenerator != null);
             _hmacGenerator = hmacGenerator;
-        }
-
-        public byte[] ComputeHmac(byte[] msgToHash) {
-            return _hmacGenerator.ComputeHash(msgToHash);
         }
 
         public void Dispose() {
@@ -26,13 +18,21 @@ namespace cryptotests.Hashes
             GC.SuppressFinalize(this);
         }
 
-        protected  virtual void Dispose(bool isDisposing)
-        {
+        public byte[] ComputeHmac(byte[] msgToHash) {
+            return _hmacGenerator.ComputeHash(msgToHash);
+        }
+
+        protected virtual void Dispose(bool isDisposing) {
             if (isDisposing) {
                 _hmacGenerator.Dispose();
             }
         }
-    }
 
-    
+        [ContractInvariantMethod]
+        [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic",
+            Justification = "Required for code contracts.")]
+        private void ObjectInvariant() {
+            Contract.Invariant(_hmacGenerator != null);
+        }
+    }
 }
